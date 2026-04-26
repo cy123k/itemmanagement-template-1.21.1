@@ -1,6 +1,19 @@
 name: Build
 
-on: [push, pull_request]
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      gradle_task:
+        description: Gradle task to run
+        required: false
+        default: build
+      upload_artifacts:
+        description: Upload built jars as workflow artifacts
+        required: false
+        type: boolean
+        default: true
 
 jobs:
   build:
@@ -27,4 +40,12 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Build with Gradle
-        run: ./gradlew build
+        run: ./gradlew ${{ inputs.gradle_task || 'build' }}
+
+      - name: Upload build artifacts
+        if: ${{ inputs.upload_artifacts != false }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: mod-jars
+          path: build/libs/*.jar
+          if-no-files-found: error
