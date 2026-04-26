@@ -1,25 +1,61 @@
+# Item Management
 
-Installation information
-=======
+`Item Management` is a NeoForge mod for Minecraft `1.21.1` focused on item blocking and item replacement for modpacks and custom worlds.
 
-This template repository can be directly cloned to get you started with a new
-mod. Simply create a new repository cloned from this one, by following the
-instructions provided by [GitHub](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template).
+## What It Does
 
-Once you have your clone, simply open the repository in the IDE of your choice. The usual recommendation for an IDE is either IntelliJ IDEA or Eclipse.
+- Block items by replacing them with `minecraft:air`
+- Replace one item with another item
+- Filter blocked or replaced items from:
+  - world item entities
+  - player tosses
+  - living entity drops
+  - loot table output
+  - opened containers
+  - optionally player inventories
+- Hide truly blocked items from creative tabs
+- Edit world rules in-game through a keybind-driven GUI
+- Export the current world rules as a default-world template
+- Initialize new worlds from pack-defined default rules
+- Let world creation decide whether pack default rules should be applied through a custom `GameRule`
 
-If at any point you are missing libraries in your IDE, or you've run into problems you can
-run `gradlew --refresh-dependencies` to refresh the local cache. `gradlew clean` to reset everything 
-{this does not affect your code} and then start the process again.
+## Main User Flows
 
-Mapping Names:
-============
-By default, the MDK is configured to use the official mapping names from Mojang for methods and fields 
-in the Minecraft codebase. These names are covered by a specific license. All modders should be aware of this
-license. For the latest license text, refer to the mapping file itself, or the reference copy here:
-https://github.com/NeoForged/NeoForm/blob/main/Mojang.md
+### In-Game Rule Editing
 
-Additional Resources: 
-==========
-Community Documentation: https://docs.neoforged.net/  
-NeoForged Discord: https://discord.neoforged.net/
+- Press the configured keybind to open the blocked/replacement rule screen
+- Add rules from:
+  - current main hand item
+  - searched item ids
+  - wildcard patterns such as `minecraft:*_log`
+- Change a rule's replacement target
+- Remove entire rules or individual entries inside grouped wildcard rules
+- Save rules to the current world
+
+### Modpack Author Workflow
+
+- Define pack-level world defaults in config
+- Create a world and decide whether to apply those defaults through the `itemmanagementUsePackDefaultRules` gamerule
+- Tune rules in-game if needed
+- Export the tuned world rules to a TOML template file
+
+## Important Files
+
+- Main mod entry: [src/main/java/com/item_management/Itemmanagement.java](src/main/java/com/item_management/Itemmanagement.java)
+- Config: [src/main/java/com/item_management/Config.java](src/main/java/com/item_management/Config.java)
+- Runtime rule manager: [src/main/java/com/item_management/service/BlockedItemsManager.java](src/main/java/com/item_management/service/BlockedItemsManager.java)
+- World initialization: [src/main/java/com/item_management/service/WorldRuleInitializationService.java](src/main/java/com/item_management/service/WorldRuleInitializationService.java)
+- Rule export: [src/main/java/com/item_management/service/DefaultRuleExportService.java](src/main/java/com/item_management/service/DefaultRuleExportService.java)
+- GUI: [src/main/java/com/item_management/client/gui/BlockedItemsScreen.java](src/main/java/com/item_management/client/gui/BlockedItemsScreen.java)
+- Network: [src/main/java/com/item_management/network/ModNetwork.java](src/main/java/com/item_management/network/ModNetwork.java)
+- Loot filtering: [src/main/java/com/item_management/loot/BlockedItemsLootModifier.java](src/main/java/com/item_management/loot/BlockedItemsLootModifier.java)
+
+## Build
+
+```powershell
+./gradlew compileJava
+```
+
+## Docs
+
+- See [docs/implemented-features.md](docs/implemented-features.md) for a fuller overview of the systems currently implemented in the mod.
