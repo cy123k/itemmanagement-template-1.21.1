@@ -1,0 +1,13 @@
+{
+  "itemGroup.itemmanagement": "Example Mod Tab",
+  "block.itemmanagement.example_block": "Example Block",
+  "item.itemmanagement.example_item": "Example Item",
+
+  "itemmanagement.configuration.title": "Item_management Configs",
+  "itemmanagement.configuration.section.itemmanagement.common.toml": "Item_management Configs",
+  "itemmanagement.configuration.section.itemmanagement.common.toml.title": "Item_management Configs",
+  "itemmanagement.configuration.items": "Item List",
+  "itemmanagement.configuration.logDirtBlock": "Log Dirt Block",
+  "itemmanagement.configuration.magicNumberIntroduction": "Magic Number Text",
+  "itemmanagement.configuration.magicNumber": "Magic Number"
+}
